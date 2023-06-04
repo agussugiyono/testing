@@ -26,6 +26,11 @@ func (repo *userQuery) Insert(user *user.Core) error {
 		return err
 	}
 
+	// Save the changes to the database
+	if err := repo.db.Save(&userData).Error; err != nil {
+		return err
+	}
+
 	return nil
 }
 

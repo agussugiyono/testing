@@ -40,24 +40,5 @@ func InitialMigration(db *gorm.DB) error {
 		return err
 	}
 
-	// Add foreign key constraints manually
-	if err := db.Exec("ALTER TABLE classes ADD CONSTRAINT fk_classes_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE RESTRICT").Error; err != nil {
-		return err
-	}
-
-	if err := db.Exec("ALTER TABLE mentees ADD CONSTRAINT fk_mentees_classes FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE RESTRICT ON UPDATE RESTRICT").Error; err != nil {
-		return err
-	}
-
-	if err := db.Exec("ALTER TABLE logs ADD CONSTRAINT fk_logs_users FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE RESTRICT ON UPDATE RESTRICT").Error; err != nil {
-		return err
-	}
-	if err := db.Exec("ALTER TABLE logs ADD CONSTRAINT fk_logs_classes FOREIGN KEY (class_id) REFERENCES classes(id) ON DELETE RESTRICT ON UPDATE RESTRICT").Error; err != nil {
-		return err
-	}
-	if err := db.Exec("ALTER TABLE logs ADD CONSTRAINT fk_logs_mentees FOREIGN KEY (mentee_id) REFERENCES mentees(id) ON DELETE RESTRICT ON UPDATE RESTRICT").Error; err != nil {
-		return err
-	}
-
 	return nil
 }
