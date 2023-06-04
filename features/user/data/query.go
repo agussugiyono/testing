@@ -21,13 +21,17 @@ func (repo *userQuery) Insert(user *user.Core) error {
 	// Create a new database model from the user core data
 	userData := ModelToCore(user)
 
-	// Insert the user data into the database
-	if err := repo.db.Create(&userData).Error; err != nil {
+	// Hash password sebelum disimpan
+	hashedPassword, err := helper.HashPassword(user.Password)
+	if err != nil {
 		return err
 	}
 
-	// Save the changes to the database
-	if err := repo.db.Save(&userData).Error; err != nil {
+	// Mengganti password dengan hashed password
+	userData.Password = hashedPassword
+
+	// Insert the user data into the database
+	if err := repo.db.Create(&userData).Error; err != nil {
 		return err
 	}
 

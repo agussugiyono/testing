@@ -37,8 +37,10 @@ type Core struct {
 }
 type UserDataInterface interface {
 	Insert(user *Core) error
+	// Login(email string, password string) (Core, string, error)
 }
 
 type UserServiceInterface interface {
 	Create(user *Core) error
+	// Login(email string, password string) (Core, string, error)
 }

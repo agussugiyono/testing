@@ -20,14 +20,20 @@ func (service *userService) Create(user *user.Core) error {
 		return fmt.Errorf("only admin and manager can add users")
 	}
 
-	// Insert the user data into the database
-	err := service.userData.Insert(user)
+	// Hash password sebelum disimpan
+	hashedPassword, err := helper.HashPassword(user.Password)
 	if err != nil {
 		return err
 	}
 
-	// Implementasi logika pembuatan pengguna
-	// ...
+	// Mengganti password dengan hashed password
+	user.Password = hashedPassword
+
+	// Insert the user data into the database
+	err = service.userData.Insert(user)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
